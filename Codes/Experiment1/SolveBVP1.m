@@ -1,6 +1,5 @@
 function [uh,uj,dof,info]=SolveBVP1(node,elem,uj,info,item,HB,belong)
 %case 1
-% profile on
 Axi=1;c=0;sagamaa=1;
 belong(belong==0)=find(belong==0);
 %% Pis and chi
@@ -26,6 +25,7 @@ elemLen = cellfun('length',elem);
 nnz = sum(elemLen.^2);
 ii = zeros(nnz,1); jj = zeros(nnz,1); 
 ssA = zeros(nnz,1);  ssB = zeros(nnz,1);
+ssB0 = zeros(nnz,1);
 ia = 0; 
 for iel = 1:NT
     % ------- element information --------
@@ -67,12 +67,11 @@ for iel = 1:NT
     % consistency relation
     G = B*D;  Gs = Bs*D;      
     % --------- L2 projection ----------- 
-    nodeTT = [node(index,:)];
-    elemTT = [1 2 3];
+    
     H = zeros(Nm,Nm);
     for i = 1:Nm
         fun = @(x,y) repmat(mc{i}(x,y),1,Nm).*m(x,y);
-        H(i,:) = integralTri(fun,2,nodeTT,elemTT);
+        H(i,:) = integralTri(fun,2,nodeT,elemT); 
     end 
 
     % --------- Piecewise constant projection-----------   
