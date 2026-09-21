@@ -1,7 +1,8 @@
 function [etaN,dofN,eigenN,NT]=Main_Solve1()
 %% Adaptive Virtual Element Method
 %% Parameters
-theta = 0.5;  Tol = 3e-02; epsrong=1; %Tol_L=1e-03; Tol_SL = 3e-04
+theta = 0.5;  Tol = 1e-03; epsrong=1; %Tol_L=1e-03; Tol_SL = 3e-04
+Lambda = 1; meshState = []; 
 %% Generate an initial mesh
 % %% L-shape domian
 node = [-1,1;0,1;-1,0;0,0;1,0;-1,-1;0,-1;1,-1];
@@ -60,8 +61,10 @@ while epsrong > 0.5*Tol
             % Step 3: MARK
             elemMarked = mark(elem,eta1.^0.5,theta);
             % Step 4: REFINE
-            bdFlag = SetBoundary(node,elem,'Dirichlet');
-            [node,elem,~,~,HB,belong]=bisect(node,elem,elemMarked,bdFlag);
+            %bisect now returns a nonconforming, Lambda-admissible
+            % polygonal mesh; boundary nodes are found later by setboundary.
+            [node,elem,~,~,HB,belong,meshState]= ...
+                bisect(node,elem,elemMarked,[],meshState,Lambda);
             showmesh(node,elem);
             pause(0.025);
             jishi=jishi+1;
@@ -69,6 +72,7 @@ while epsrong > 0.5*Tol
     end
     epsrong=0.5*epsrong;
     k=k+1;
+    fprintf(' 第 %d 次外迭代开始\n', k);
 end
 %uhh=uh(:,2);
 %showsolution(node,elem,uhh(1:size(node,1),1));
