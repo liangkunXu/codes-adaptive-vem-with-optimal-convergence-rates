@@ -15,6 +15,7 @@ elemLen = cellfun('length',elem);
 nnz = sum(elemLen.^2);
 ii = zeros(nnz,1); jj = zeros(nnz,1); 
 ssA = zeros(nnz,1);  ssB = zeros(nnz,1);
+ssB0 = zeros(nnz,1); 
 ia = 0; 
 for iel = 1:NT
     % ------- element information --------
@@ -120,7 +121,7 @@ dof=Nin;
 item=5;
 [eigf,lam] = eigs(A,M,item,'sm');
 lam = diag(lam);
-uh=zeros(dof,item);
+uh=zeros(N,item); 
 Eigen =lam;
 for arg=1:item
     Eigf = eigf(:,arg);
