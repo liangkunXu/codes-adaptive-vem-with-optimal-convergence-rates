@@ -1,6 +1,5 @@
 function eta = indicatorBVP1(node,elem,uh0,uh,info)
-% This function returns the local error indicator of solving the laplace
-% eigenproblem
+% This function returns the local error indicator
 % using virtual element method in V1
 % Copyright (C) Xu.
 %case 1
@@ -35,16 +34,15 @@ for iel = 1:NT
     % element information
     index = elem{iel};  Nv = length(index);
     xK = centroid(iel,1); yK = centroid(iel,2); hK = diameter(iel);
-    % nodeT = [node(index,:);aux.centroid(iel,:)];
-    % elemT = [(Nv+1)*ones(Nv,1),(1:Nv)',[2:Nv,1]'];
+    nodeT = [node(index,:);aux.centroid(iel,:)];
+    elemT = [(Nv+1)*ones(Nv,1),(1:Nv)',[2:Nv,1]'];
     % scaled monomials
     m1 = @(x,y)  1+0*x;
     m2 = @(x,y) (x-xK)./hK;
     m3 = @(x,y) (y-yK)./hK;
     
     Piuh = @(x,y) ( au0{iel}*1-c*(au{iel}(1)*m1(x,y)+au{iel}(2)*m2(x,y)+au{iel}(3)*m3(x,y)) ).^2;
-    %eta1(iel) = hK^2*integralTri(Piuh,2,nodeT,elemT);
-    eta1(iel) = hK^2*integralTri(Piuh,2,node(index,:),[1 2 3]);
+    eta1(iel) = hK^2*integralTri(Piuh,2,nodeT,elemT); 
 end
 elemRes = eta1;
 
