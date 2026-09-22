@@ -1,7 +1,7 @@
 function [etaN,dofN,eigenN,NT]=Main_Solve1()
 %% Adaptive Virtual Element Method
 %% Parameters
-theta = 0.5;  Tol = 1e-03; epsrong=1; %Tol_L=1e-03; Tol_SL = 3e-04
+theta = 0.5;  Tol = 3e-02; epsrong=1; %Tol_L=1e-03; Tol_SL = 3e-04
 Lambda = 1; meshState = []; 
 %% Generate an initial mesh
 % %% L-shape domian
