@@ -1,8 +1,6 @@
 function [node,elem,bdEdge,brother,HB,belong,meshState] = bisect(node,elem,markedElem,bdEdge,meshState,Lambda) 
 % BISECT refine marked elements by nonconforming newest-vertex bisection.
 %
-% This version keeps the original output order and adds meshState as the
-% seventh output.  
 % until max(lambda(x)) <= Lambda.
 %
 % HB(:,1:3): [new node, first parent, second parent].
@@ -211,12 +209,12 @@ bdEdge = [];
 % end Lambda-admissible nonconforming NVB
 end
 
-function key = edgeKey(a,b) %new20260916
+function key = edgeKey(a,b) 
 edge = sort([a,b]);
 key = sprintf('%d_%d',edge(1),edge(2));
 end
 
-function tri = initialTriangles(elem) %new20260916
+function tri = initialTriangles(elem) 
 if iscell(elem)
     if any(cellfun(@numel,elem) ~= 3)
         error(['A polygonal mesh with hanging nodes requires meshState ', ...
@@ -234,7 +232,7 @@ else
 end
 end
 
-function tri = orientTriangles(node,tri) %new20260916
+function tri = orientTriangles(node,tri)
 for t = 1:size(tri,1)
     p = node(tri(t,:),:);
     signedDoubleArea = det([p(2,:)-p(1,:);p(3,:)-p(1,:)]);
