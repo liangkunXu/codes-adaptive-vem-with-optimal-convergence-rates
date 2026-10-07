@@ -30,7 +30,7 @@ loglog(NNdof(1:end-1),errorestimate(1:end-1),'kX-','MarkerSize',8,'LineWidth',2)
 %求回归系数
 au=regress(log10(abs(eigv1(1:end-1)-ref1))',[ones(length(eigv1)-1,1) log10(NNdof(1:end-1))'])
 %a=au(1),b=au(2),10
-x=linspace(8000,200000);y=10.^(au(1)-2)*x.^(-1);hold on; loglog(x,y,'k-','LineWidth',1)
+x=linspace(3000,100000);y=10.^(au(1)-2)*x.^(-1);hold on; loglog(x,y,'k-','LineWidth',1)
 %添加主题和坐标标题
 xlabel('$\#\mathcal{T}_\ell$','Interpreter','latex','fontsize',11);ylabel('Error','fontsize',12);
 %添加图例
@@ -38,7 +38,7 @@ fg=legend('$|\lambda_{1}-\lambda_{1,\ell}|$','$|\lambda_{2}-\lambda_{2,\ell}|$',
     '$|\lambda_{3}-\lambda_{3,\ell}|$','$|\lambda_{4}-\lambda_{4,\ell}|$', ...
     '$|\lambda_{5}-\lambda_{5,\ell}|$','$\eta_\ell^2$','location','best');
 fg.Interpreter="latex";
-tx=text(30000,10^-3.9,'slope$=-1$','fontsize',12);
+tx=text(20000,10^-2.7,'slope$=-1$','fontsize',12);
 tx.Interpreter="latex";
 axis tight;
 hold off
