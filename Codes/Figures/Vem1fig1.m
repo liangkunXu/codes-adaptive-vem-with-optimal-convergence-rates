@@ -1,5 +1,6 @@
 function Vem1fig1()
-NNdof=[1025	3911	15538	63346	261247	1080811];
+% NNdof=[1025	3911	15538	63346	261247	1080811];%dof
+NNdof=[1887	7445	30132	124180	515648	2141990];%NT
 errorestimate=[0.00073221293812672	0.000208843131140529	5.57034730497011e-05	1.37878746735335e-05	3.35131580464649e-06	8.16020351419103e-07];
 eigv1=[9.8113736741961	9.68983823321175	9.64889113927064	9.64194029259666	9.64030496596059	9.63986834671297];
 ref1=eigv1(end);
@@ -25,7 +26,7 @@ loglog(NNdof(1:end-1),errorestimate(1:end-1),'kX-','MarkerSize',8,'LineWidth',2)
 %求回归系数
 au=regress(log10(abs(eigv1(1:end-1)-ref1))',[ones(length(eigv1)-1,1) log10(NNdof(1:end-1))'])
 %a=au(1),b=au(2),10
-x=linspace(3000,100000);y=10.^(au(1)-1.8)*x.^(-1);hold on; loglog(x,y,'k-','LineWidth',1)
+x=linspace(5000,200000);y=10.^(au(1)-1.8)*x.^(-1);hold on; loglog(x,y,'k-','LineWidth',1)
 %添加主题和坐标标题
 xlabel('$\#\mathcal{T}_\ell$','Interpreter','latex','fontsize',11);ylabel('Error','fontsize',12);
 
@@ -34,7 +35,7 @@ fg=legend('$|\lambda_{1}-\lambda_{1,\ell}|$','$|\lambda_{2}-\lambda_{2,\ell}|$',
     '$|\lambda_{3}-\lambda_{3,\ell}|$','$|\lambda_{4}-\lambda_{4,\ell}|$', ...
     '$|\lambda_{5}-\lambda_{5,\ell}|$','$\eta_\ell^2$','location','best');
 fg.Interpreter="latex";
-tx=text(13000,10^-3.2,'slope$=-1$','fontsize',12);
+tx=text(31000,10^-3.3,'slope$=-1$','fontsize',12);
 tx.Interpreter="latex";
 axis tight;
 hold off
